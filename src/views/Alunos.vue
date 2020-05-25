@@ -4,10 +4,10 @@
 	<v-container class="my-5">
 		<v-layout row wrap class="mx-0">
 			<v-flex md6>
-				<v-text-field label="Pesquisar aluno pelo nome"></v-text-field>
+				<v-text-field v-model="search" label="Pesquisar aluno pelo nome"></v-text-field>
 			</v-flex>
 			<v-flex md2>
-				<v-btn text small>Procurar</v-btn>	
+				<v-btn text small @click="searchStudent(search)">Procurar</v-btn>	
 			</v-flex>	
 		</v-layout>
 
@@ -30,8 +30,8 @@
 		<v-card flat v-for="data in data" :key="data.id">
 			<v-layout row wrap class="mx-3">
 				<v-flex xs12 md2>
-					<div class="caption grey--text">Registro:</div>
-					<div>{{ data.id }}</div>
+					<div class="caption grey--text" >Registro:</div>
+					<div>{{ data.ra }}</div>
 				</v-flex>
 				<v-flex xs6 sm4 md6>
 					<div class="caption grey--text">Nome:</div>
@@ -106,6 +106,7 @@ export default {
 		cpf: '',
 		dialog: false,
 		dialogEdit: false,
+		search: '',
 	}
 	},
 	components: {
@@ -138,6 +139,20 @@ export default {
 				this.dialog = false;
 				location.reload();
 			})
+		},
+		searchStudent(search) {
+			
+			db.collection("students").where("name", "==", search)
+				.get()
+				.then(function(querySnapshot) {
+					querySnapshot.forEach(function(doc) {
+						console.log(doc.id, " => ", doc.data());
+
+					});
+				})
+				.catch(function(error) {
+					console.log("Error getting documents: ", error);
+				});
 		}
 	},
 	created() {
