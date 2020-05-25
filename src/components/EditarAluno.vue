@@ -1,10 +1,11 @@
 <template  v-slot:activator="{ on }">
-	<v-dialog v-model="dialog" width="600px">
-		<v-btn small text slot="activator" @click="dialog = !dialog">Editar</v-btn>
+	<v-dialog v-model="dialog" max-width="400">
 		<v-card>
-			<v-card-title>
-				<h2>Editar aluno</h2>
-			</v-card-title>
+			<v-card-title>Confirma a exclusão do aluno?</v-card-title>
+			<v-card-actions class="d-flex justify-end">
+				<v-btn text @click="dialog = false">Não</v-btn>
+				<v-btn text @click="dialog = false">Sim</v-btn>
+			</v-card-actions>
 		</v-card>
 	</v-dialog>
 </template>
@@ -16,6 +17,7 @@ export default {
 			dialog: false,
 			name: '',
 			cpf: '',
+			studentId: this.$emit('studentId')
 		}
 	},
 }

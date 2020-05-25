@@ -46,6 +46,7 @@ export default {
 				this.name = '';
 				this.cpf = '';
 				this.email = '';
+				this.$emit('studentAdded');
 			})
 		}
 	}

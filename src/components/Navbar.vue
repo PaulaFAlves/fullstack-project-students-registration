@@ -1,7 +1,10 @@
 <template>
 	<nav>
 		<v-app-bar flat app style="height: 60px">
-			<v-snackbar
+			<v-snackbar v-model="snackbar" :timeout="4000">
+				<span>awesome</span>
+				<v-btn text color="white" @click="snackbar = false">Close</v-btn>
+			</v-snackbar>
 
 			<v-toolbar-title class="text-uppercase grey--text">
 				<span class="font-weight-light">Módulo Acadêmico</span>
@@ -13,8 +16,7 @@
 			</v-btn>
 		</v-app-bar>
 		<v-navigation-drawer v-model="drawer" app class="black">
-				<v-img src="../assets/logo-black.png" class="my-2" height="70" contain></v-img>
-
+			<v-img src="../assets/logo-black.png" class="my-2" height="70" contain></v-img>
 
 			<v-list class="d-flex flex-column py-0  my-5">
 
@@ -46,7 +48,8 @@ export default {
 				{ icon: 'mdi-account-multiple', text: 'Alunos', route: '/alunos' },
 				{ icon: 'mdi-teach', text: 'Professores', route: '/professores' },
 				{ icon: 'mdi-notebook', text: 'Disciplinas', route: '/' },
-			]
+			],
+			snackbar: false,
 		}
 	}
 }

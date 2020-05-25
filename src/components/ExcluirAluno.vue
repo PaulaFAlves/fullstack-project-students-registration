@@ -4,20 +4,28 @@
 		<v-card>
 			<v-card-title>
 				<h2>Excluir aluno</h2>
+				<v-btn @click="deleteStudent()">confirmar</v-btn>
 			</v-card-title>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
+// import db from '@/db'
+
 export default {
 	data() {
 		return {
 			dialog: false,
-			name: '',
-			cpf: '',
 		}
 	},
+	methods: {
+		deleteStudent() {
+			let id = this.data.id
+			// db.collection('students').doc(data.id).delete();
+			console.log(id)
+		}
+	}
 }
 </script>
 

@@ -13,7 +13,7 @@
 
 		<v-divider></v-divider>
 		<v-flex class="my-5">
-			<IncluirAluno />
+			<IncluirAluno @studentAdded="snackbar= true"/>
 		</v-flex>
 
 		<v-layout row class="mb-3">
@@ -43,9 +43,46 @@
 				</v-flex>
 				<v-flex xs2 sm4 md2>
 					<div class="my-5">
-						<EditarAluno />
-						<ExcluirAluno />
+						<!-- <EditarAluno /> -->
+						<v-btn text small @click.stop="dialogEdit = true">Editar</v-btn>
+						<v-dialog v-model="dialogEdit" max-width="500">
+							<v-card>
+								<v-form class="px-3">
+									<v-text-field label="" :placeholder="`${data.name}`" v-model="name" prepend-icon="mdi-account">
+										
+									</v-text-field>
+									<v-text-field readonly label="CPF" :placeholder="`${data.cpf}`" v-model="cpf" prepend-icon="mdi-account">
+										
+									</v-text-field>
+									<v-text-field label="Email" :placeholder="`${data.email}`" v-model="email" prepend-icon="mdi-account">
+										
+									</v-text-field>
+								</v-form>
+
+
+								<v-card-title>Confirma a edição dos dados do aluno?</v-card-title>
+								<v-card-actions class="d-flex justify-end">
+									<v-btn text @click="dialogEdit = false">Não</v-btn>
+									<v-btn text @click="updateStudent(data.id)">Sim</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-dialog>
+
+						<!-- <ExcluirAluno props/> -->
+						<v-btn text small @click.stop="dialog = true">Excluir</v-btn>
+						<v-dialog v-model="dialog" max-width="400">
+							<v-card>
+								<v-card-title>Confirma a exclusão do aluno?</v-card-title>
+								<v-card-actions class="d-flex justify-end">
+									<v-btn text @click="dialog = false">Não</v-btn>
+									<v-btn text @click="deleteStudent(data.id)">Sim</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-dialog>
 					</div>
+
+
+
 				</v-flex>
 			</v-layout>
 			<v-divider></v-divider>
@@ -56,29 +93,66 @@
 
 <script>
 import IncluirAluno from '../components/IncluirAluno'
-import EditarAluno from '../components/EditarAluno'
-import ExcluirAluno from '../components/ExcluirAluno'
+// import EditarAluno from '../components/EditarAluno'
+// import ExcluirAluno from '../components/ExcluirAluno'
+import db from '@/db'
 
 export default {
 	data() {
 	return {
-		data: [
-			{ id: '100200', name: 'Paula Alves', cpf: '12212212212' },
-			{ id: '100201', name: 'Leandro Ferri', cpf: '12212212212' },
-			{ id: '100202', name: 'Caroline Vanazzi', cpf: '12212212212' },
-			{ id: '100203', name: 'Henrique Barbosa', cpf: '12212212212' },	
-		]
+		data: [],
+		name: '',
+		email: '',
+		cpf: '',
+		dialog: false,
+		dialogEdit: false,
 	}
 	},
 	components: {
 		IncluirAluno,
-		EditarAluno,
-		ExcluirAluno,
+		// EditarAluno,
+		// ExcluirAluno,
 	},
 	methods: {
 		sortBy(prop) {
 			this.data.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+		},
+		deleteStudent(id) {
+			console.log(id)
+			db.collection('students').doc(id).delete()
+				.then(() => {
+					this.dialog = false;
+					location.reload();	
+				})
+
+		},
+		updateStudent(id) {
+			console.log(id)
+
+			db.collection('students').doc(id).update({
+				name: this.name,
+				email: this.email,
+			}).then(() => {
+				this.name = '';
+				this.email = '';
+				this.dialog = false;
+				location.reload();
+			})
 		}
+	},
+	created() {
+		db.collection('students').onSnapshot(res => {
+			const changes = res.docChanges();
+
+			changes.forEach(change => {
+				if (change.type === 'added'){
+					this.data.push({
+						...change.doc.data(),
+						id: change.doc.id
+					})
+				}
+			})
+		})
 	}
 }
 </script>
