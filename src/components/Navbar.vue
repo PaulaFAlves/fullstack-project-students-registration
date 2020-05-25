@@ -1,6 +1,8 @@
 <template>
 	<nav>
 		<v-app-bar flat app style="height: 60px">
+			<v-snackbar
+
 			<v-toolbar-title class="text-uppercase grey--text">
 				<span class="font-weight-light">Módulo Acadêmico</span>
 			</v-toolbar-title>

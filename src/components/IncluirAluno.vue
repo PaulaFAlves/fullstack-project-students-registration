@@ -9,7 +9,8 @@
 				<v-form class="px-3">
 					<v-text-field label="Name" v-model="name" prepend-icon="mdi-account"></v-text-field>
 					<v-text-field label="CPF" v-model="cpf" prepend-icon="mdi-card-account-details"></v-text-field>
-					<v-btn text class="success" @click="submit">Adicionar</v-btn>
+					<v-text-field label="email" v-model="email" prepend-icon="mdi-card-account-details"></v-text-field>
+					<v-btn text class="success" @click="submit" :loading="loading">Adicionar</v-btn>
 				</v-form>
 			</v-card-text>
 		</v-card>
@@ -17,17 +18,35 @@
 </template>
 
 <script>
+import db from '@/db'
+
 export default {
 	data() {
 		return {
 			dialog: false,
 			name: '',
 			cpf: '',
+			email: '',
+			loading: false,
+			
 		}
 	},
 	methods: {
 		submit() {
-			console.log(this.name, this.cpf)
+			this.loading = true;
+
+			const student = {
+				name: this.name,
+				cpf: this.cpf,
+				email: this.email,
+			}
+			db.collection('students').add(student).then(()=>{
+				this.loading = false;
+				this.dialog = false;
+				this.name = '';
+				this.cpf = '';
+				this.email = '';
+			})
 		}
 	}
 
