@@ -58,6 +58,7 @@ export default {
 				this.loading = true;
 
 				const student = {
+					ra: this.ra,
 					name: this.name,
 					cpf: this.cpf,
 					email: this.email,
