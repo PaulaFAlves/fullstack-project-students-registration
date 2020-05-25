@@ -12,6 +12,8 @@
 		</v-app-bar>
 		<v-navigation-drawer v-model="drawer" app class="black">
 				<v-img src="../assets/logo-black.png" class="my-2" height="70" contain></v-img>
+
+
 			<v-list class="d-flex flex-column py-0  my-5">
 
 				<v-list-item  v-for="link in links" :key="link.text" router :to="link.route">
@@ -23,12 +25,16 @@
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
+
+
 			
 		</v-navigation-drawer>
 	</nav>
 </template>
 
 <script>
+
+
 export default {
 	data() {
 		return {
