@@ -85,48 +85,24 @@ export default {
 		sortBy(prop) {
 			this.data.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
 		},
-		deleteStudent(data) {
-			
-			console.log(data)
-			// console.log(id)
-			// db.collection('students').doc(id).delete()
-			// 	.then(() => {
-			// 		this.dialog = false;
-			// 		location.reload();	
-			// 	})
-
-		},
-		updateStudent(id) {
-			console.log(id)
-
-			db.collection('students').doc(id).update({
-				name: this.name,
-				email: this.email,
-			}).then(() => {
-				this.name = '';
-				this.email = '';
-				this.dialog = false;
-				location.reload();
-			})
-		},
 		searchStudent(search) {
-			
 			db.collection("students").where("name", "==", search)
-				.get()
-				.then(function(querySnapshot) {
-					querySnapshot.forEach(function(doc) {
-						console.log(doc.id, " => ", doc.data());
-
-					});
+				.onSnapshot(res => {
+					const changes = res.docChanges();
+					console.log(changes)
+					changes.forEach(change => {
+							this.data.push({
+								...change.doc.data(),
+								// id: change.doc.id
+							})
+					})
 				})
-				.catch(function(error) {
-					console.log("Error getting documents: ", error);
-				});
 		}
 	},
 	created() {
 		db.collection('students').onSnapshot(res => {
 			const changes = res.docChanges();
+			console.log(changes)
 
 			changes.forEach(change => {
 				if (change.type === 'added'){

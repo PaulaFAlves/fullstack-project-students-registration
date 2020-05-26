@@ -42,6 +42,7 @@ export default {
 	},
 	data() {
 		return {
+			data: [],
 			dialog: false,
 			name: '',
 			cpf: '',
@@ -51,15 +52,34 @@ export default {
 	methods: {
 		updateStudent() {
 			console.log(this.studentId)
-			db.collection('students').doc(this.studentId).update({
-				name: this.name,
-				email: this.email,
-			}).then(() => {
-				this.name = '';
-				this.email = '';
-				this.dialog = false;
-				location.reload();
-			})
+			if (this.name !== '') {
+				db.collection('students').doc(this.studentId).update({
+					name: this.name,
+				}).then(() => {
+					this.dialog = false;
+				})
+			}
+			if (this.email !== '') {
+				db.collection('students').doc(this.studentId).update({
+					email: this.email,
+				}).then(() => {
+					this.dialog = false;
+				})
+			}
+		
+
+			// .then(() => {
+			// 	db.collection('students').onSnapshot(snapshot => {
+			// 		let changes = snapshot.docChanges();
+			// 		changes.forEach(change => {
+			// 			if (change.type === 'updated') {
+			// 				this.name.push({
+			// 				...change.doc.data(),
+			// 				id: change.doc.id
+			// 			})}
+			// 		})
+			// 	})
+			// })
 		},
 	},
 	created() {
