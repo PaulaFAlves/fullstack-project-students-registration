@@ -2,21 +2,23 @@
 	<v-dialog v-model="dialog" max-width="600">
 		<v-btn small text slot="activator" @click="dialog = !dialog">Editar</v-btn>
 		<v-card>
-			<v-card-title>Edição de dados do aluno?</v-card-title>
-			<v-form class="px-3">
-				<v-text-field label="Nome" :placeholder="`${this.studentName}`" v-model="name" prepend-icon="mdi-account">
+			<v-card-title class="red--text text--darken-1 text-uppercase">
+				Editar dados do aluno
+			</v-card-title>
+			<v-form class="px-3" ref="form">
+				<v-text-field label="Nome" color="black" :rules="nameRules" v-model="name" prepend-icon="mdi-account">
 					
 				</v-text-field>
-				<v-text-field disabled label="CPF (não editável)" :placeholder="`${this.studentCpf}`" v-model="cpf" prepend-icon="mdi-account">
+				<v-text-field disabled label="CPF (não editável)" v-model="cpf" prepend-icon="mdi-account">
 					
 				</v-text-field>
-				<v-text-field label="Email" :placeholder="`${this.studentEmail}`" v-model="email" prepend-icon="mdi-account">
-					
+				<v-text-field label="Email" color="black" :rules="emailRules" v-model="email" prepend-icon="mdi-account">
+					texte
 				</v-text-field>
 			</v-form>
 			<v-card-actions class="d-flex justify-end">
-				<v-btn text @click="dialog = false">Não</v-btn>
-				<v-btn text @click="updateStudent">Sim</v-btn>
+				<v-btn text @click="cancel">Cancelar</v-btn>
+				<v-btn text @click="updateStudent">Confirmar</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -44,46 +46,33 @@ export default {
 		return {
 			data: [],
 			dialog: false,
-			name: '',
-			cpf: '',
-			email: '',
+			name: this.studentName,
+			cpf: this.studentCpf,
+			email: this.studentEmail,
+			nameRules: [
+				() => this.name.match(/\s/) || 'Informar Nome e Sobrenome',
+			],
+			emailRules: [
+				() => this.email.match(/[@]*[.]/) || 'Email Inválido',
+			],
 		}
 	},
 	methods: {
 		updateStudent() {
-			console.log(this.studentId)
-			if (this.name !== '') {
+			if(this.$refs.form.validate()) {
 				db.collection('students').doc(this.studentId).update({
 					name: this.name,
+					email: this.email
 				}).then(() => {
 					this.dialog = false;
+					location.reload()
 				})
-			}
-			if (this.email !== '') {
-				db.collection('students').doc(this.studentId).update({
-					email: this.email,
-				}).then(() => {
-					this.dialog = false;
-				})
-			}
-		
+				}
 
-			// .then(() => {
-			// 	db.collection('students').onSnapshot(snapshot => {
-			// 		let changes = snapshot.docChanges();
-			// 		changes.forEach(change => {
-			// 			if (change.type === 'updated') {
-			// 				this.name.push({
-			// 				...change.doc.data(),
-			// 				id: change.doc.id
-			// 			})}
-			// 		})
-			// 	})
-			// })
 		},
+		cancel() {
+			this.dialog = false;
+		}
 	},
-	created() {
-
-	}
 }
 </script>

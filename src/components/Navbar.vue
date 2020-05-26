@@ -1,10 +1,10 @@
 <template>
 	<nav>
 		<v-app-bar flat app style="height: 60px">
-			<v-snackbar v-model="snackbar" :timeout="4000">
+<!-- 			<v-snackbar v-model="snackbar">
 				<span>awesome</span>
 				<v-btn text color="white" @click="snackbar = false">Close</v-btn>
-			</v-snackbar>
+			</v-snackbar> -->
 
 			<v-toolbar-title class="text-uppercase grey--text">
 				<span class="font-weight-light">Módulo Acadêmico</span>
@@ -44,7 +44,7 @@ export default {
 				{ icon: 'mdi-teach', text: 'Professores', route: '/professores' },
 				{ icon: 'mdi-notebook', text: 'Disciplinas', route: '/' },
 			],
-			snackbar: false,
+			// snackbar: true,
 		}
 	}
 }

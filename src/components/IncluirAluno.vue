@@ -2,17 +2,20 @@
 	<v-dialog v-model="dialog" width="600px">
 		<v-btn slot="activator" @click="dialog = !dialog">Incluir novo aluno</v-btn>
 		<v-card>
-			<v-card-title>
-				<h2>Adicionar aluno</h2>
+			<v-card-title class="red--text text--darken-1 text-uppercase">
+				Incluir Novo Aluno
 			</v-card-title>
 			<v-card-text>
 				<v-form class="px-3" ref="form">
-					<v-text-field label="Registro Acadêmico" v-model="ra" prepend-icon="mdi-account" :rules="raRules"></v-text-field>
-					<v-text-field label="Name" v-model="name" prepend-icon="mdi-account" :rules="nameRules"></v-text-field>
-					<v-text-field label="CPF" v-model="cpf" prepend-icon="mdi-card-account-details" :rules="cpfRules"></v-text-field>
-					<v-text-field label="email" v-model="email" prepend-icon="mdi-email" :rules="emailRules"></v-text-field>
-					<v-btn text disable class="success" @click="submit" :loading="loading">Adicionar</v-btn>
+					<v-text-field label="Registro Acadêmico" color="black" v-model="ra" prepend-icon="mdi-book-variant" :rules="raRules"></v-text-field>
+					<v-text-field label="Name" color="black" v-model="name" prepend-icon="mdi-account" :rules="nameRules"></v-text-field>
+					<v-text-field label="CPF" color="black" v-model="cpf" prepend-icon="mdi-card-account-details" :rules="cpfRules"></v-text-field>
+					<v-text-field label="email" color="black" v-model="email" prepend-icon="mdi-email" :rules="emailRules"></v-text-field>
 				</v-form>
+					<v-card-actions class="d-flex justify-end">
+						<v-btn text @click="cancel">Cancelar</v-btn>
+						<v-btn text @click="submit" :loading="loading">Confirmar</v-btn>
+					</v-card-actions>
 			</v-card-text>
 		</v-card>
 	</v-dialog>
@@ -31,9 +34,6 @@ export default {
 			email: '',
 			warning: '',
 			loading: false,
-			inputRules: [
-				v => v.length >= 3 || 'Minimum 3 caracters'
-			],
 			raRules: [
 				() => this.ra.length > 0 || 'Campo obrigatório', 
 				() => this.ra.length == 6 || 'Registro acadêmico deve ter 6 dígitos',
@@ -66,17 +66,29 @@ export default {
 				db.collection('students').add(student).then(()=>{
 					this.loading = false;
 					this.dialog = false;
+					this.$emit('studentAdded');
 					this.name = '';
 					this.cpf = '';
 					this.email = '';
-					this.$emit('studentAdded');
 				})	
-			} else {
-				alert('digite tudo')
-			}
+			} 
+		},
+		cancel() {
+			this.ra = '';
+			this.name = '';
+			this.cpf = '';
+			this.email = '';
+			this.dialog = false;
 		}
 	}
 
 }
 
 </script>
+
+<style>
+.red {
+	color: green;
+}
+	
+</style>

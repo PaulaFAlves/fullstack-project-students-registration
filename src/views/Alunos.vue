@@ -2,9 +2,13 @@
 <div class="alunos">
 	<h1 class="subheading">Alunos</h1>
 	<v-container class="my-5">
+		<v-snackbar v-model="snackbar" top :timeout="4000">
+			<span>Aluno incluído com sucesso!</span>
+			<v-btn text color="white" @click="snackbar = false">Close</v-btn>
+		</v-snackbar>
 		<v-layout row wrap class="mx-0">
 			<v-flex md6>
-				<v-text-field v-model="search" label="Pesquisar aluno pelo nome"></v-text-field>
+				<v-text-field v-model="search" color="black" label="Pesquisar aluno pelo nome"></v-text-field>
 			</v-flex>
 			<v-flex md2>
 				<v-btn text small @click="searchStudent(search)">Procurar</v-btn>	
@@ -13,7 +17,7 @@
 
 		<v-divider></v-divider>
 		<v-flex class="my-5">
-			<IncluirAluno @studentAdded="snackbar= true"/>
+			<IncluirAluno @studentAdded="snackbar = true"/>
 		</v-flex>
 
 		<v-layout row class="mb-3">
@@ -48,7 +52,9 @@
 							:studentName="data.name" 
 							:studentEmail="data.email"
 							:studentCpf="data.cpf" />
-						<ExcluirAluno :studentId="data.id"/>
+						<ExcluirAluno 
+							:studentId="data.id"
+							:studentName="data.name" />
 					</div>
 				</v-flex>
 			</v-layout>
@@ -74,6 +80,7 @@ export default {
 		dialog: false,
 		dialogEdit: false,
 		search: '',
+		snackbar: false,
 	}
 	},
 	components: {
