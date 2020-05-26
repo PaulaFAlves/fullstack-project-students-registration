@@ -6,20 +6,18 @@
 			<span>Aluno incluído com sucesso!</span>
 			<v-btn text color="white" @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
-		<v-layout row wrap class="mx-0">
-			<v-flex md6>
-				<v-text-field v-model="search" color="black" label="Pesquisar aluno pelo nome"></v-text-field>
-			</v-flex>
-			<v-flex md2>
-				<v-btn text small @click="searchStudent(search)">Procurar</v-btn>	
+		<!-- search -->
+		<v-layout row wrap justify-end class="mx-0 my-0">
+			<v-flex md4>
+				<v-text-field class="search" v-model="search" color="black" label="Pesquisar aluno pelo nome" append-icon="mdi-account-search" @click:append="searchStudent(search)">
+				</v-text-field>
 			</v-flex>	
 		</v-layout>
-
-		<v-divider></v-divider>
+		<!-- success add message -->
 		<v-flex class="my-5">
 			<IncluirAluno @studentAdded="snackbar = true"/>
 		</v-flex>
-
+		<!-- sort students -->
 		<v-layout row class="mb-3">
 			<v-btn small text color="grey" @click="sortBy('ra')">
 				<v-icon left small>mdi-card-account-details</v-icon>
@@ -30,7 +28,7 @@
 				<span class="caption text-lowercase">Ordenar por nome</span>
 			</v-btn>
 		</v-layout>
-
+		<!-- students list -->
 		<v-card flat v-for="data in data" :key="data.id">
 			<v-layout row wrap class="mx-3">
 				<v-flex xs12 md2>
@@ -45,6 +43,7 @@
 					<div class="caption grey--text">CPF:</div>
 					<div>{{ data.cpf }}</div>
 				</v-flex>
+				<!-- update and delete -->
 				<v-flex xs2 sm4 md2>
 					<div class="my-5">
 						<EditarAluno 
@@ -93,6 +92,7 @@ export default {
 			this.data.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
 		},
 		searchStudent(search) {
+			console.log(search)
 			db.collection("students").where("name", "==", search)
 				.onSnapshot(res => {
 					const changes = res.docChanges();
@@ -104,6 +104,7 @@ export default {
 							})
 					})
 				})
+			this.search = ''
 		}
 	},
 	created() {
@@ -123,3 +124,11 @@ export default {
 	}
 }
 </script>
+
+<style>
+.search {
+	opacity: 0.7;
+	font-style: italic;
+}
+	
+</style>

@@ -2,9 +2,14 @@
 
 ## Objetivo:
 
-O objetivo deste projeto é desenvolver a funcionalidade de cadastro de aluno no módulo acadêmico do sistema de matrículas da instuição. Para realizar a matrícula, é necessário que o cadastro tenha sido realizado com sucesso. Este ambiabte pode ser acessado por funcionário da instituição, desde logado no sistema.
-Neste ambiente, deve-ser informar os dados básicos do aluno e, caso esteja correto, o cadastro é confirmado. É possível, além disso, pesquisar aluno pelo nome, editar e excluir cadastro. 
+O objetivo deste projeto é desenvolver a funcionalidade de **cadastro de aluno** no módulo acadêmico do sistema de matrículas da instuição. Para realizar a matrícula, é necessário que o cadastro tenha sido realizado com sucesso. Este ambiente pode ser acessado por funcionário da instituição, desde que logado no sistema.
+Neste ambiente, devem ser informados os dados básicos do aluno e, caso estejam corretos, o cadastro é confirmado. É possível, além disso, pesquisar aluno pelo nome, editar e excluir cadastro. 
 
+Observações:
+
+- O cadastro é validado somente se fornecidos todos os dados e de forma correta.
+- Dos campos do cadastro, somente o nome e o email podem ser editdos.
+- A funcionalidade de pesquisa está em desenvolvimento
 
 ## Mockups de interface
 
@@ -20,7 +25,13 @@ Neste ambiente, deve-ser informar os dados básicos do aluno e, caso esteja corr
 * Criar Aluno - Erro
 ![Listagem de Alunos](/mockups/mockup-students-add-error.png)
 
+* Editar Aluno
+![Listagem de Alunos](/mockups/mockup-students-update.png)
+
+* Excluir Aluno
+![Listagem de Alunos](/mockups/mockup-students-delete.png)
+
 ## Especificações técnicas
 
-- Front End: Vuetify
-- Banco de Dados: Firebase
+- **Front End:** Vuetify
+- **Banco de Dados:** Firebase
