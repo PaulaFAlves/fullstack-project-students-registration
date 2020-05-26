@@ -26,6 +26,7 @@ export default {
 	},
 	data() {
 		return {
+			data: [],
 			dialog: false,
 		}
 	},
@@ -35,7 +36,7 @@ export default {
 			.then(() => {
 				console.log(this.studentId)
 				this.dialog = false
-				location.reload()
+				// location.reload()
 			})
 		},
 	},

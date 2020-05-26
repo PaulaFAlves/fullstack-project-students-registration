@@ -120,6 +120,22 @@ export default {
 					})
 				}
 			})
+			changes.forEach(change => {
+				if (change.type === 'modified'){
+					this.data.push({
+						...change.doc.data(),
+						id: change.doc.id
+					})
+				}
+			})
+			changes.forEach(change => {
+				if (change.type === 'deleted'){
+					this.data.push({
+						...change.doc.data(),
+						id: change.doc.id
+					})
+				}
+			})
 		})
 	}
 }

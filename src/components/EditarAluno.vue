@@ -9,10 +9,10 @@
 				<v-text-field label="Nome" color="black" :rules="nameRules" v-model="name" prepend-icon="mdi-account">
 					
 				</v-text-field>
-				<v-text-field disabled label="CPF (não editável)" v-model="cpf" prepend-icon="mdi-account">
+				<v-text-field disabled label="CPF (não editável)" v-model="cpf" prepend-icon="mdi-card-account-details">
 					
 				</v-text-field>
-				<v-text-field label="Email" color="black" :rules="emailRules" v-model="email" prepend-icon="mdi-account">
+				<v-text-field label="Email" color="black" :rules="emailRules" v-model="email" prepend-icon="mdi-email">
 					texte
 				</v-text-field>
 			</v-form>
@@ -65,10 +65,10 @@ export default {
 					email: this.email
 				}).then(() => {
 					this.dialog = false;
-					location.reload()
+					// location.reload()
 				})
-				}
 
+				}
 		},
 		cancel() {
 			this.dialog = false;
