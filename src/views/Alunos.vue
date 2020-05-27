@@ -4,7 +4,9 @@
 	<v-container class="my-5">
 		<v-snackbar v-model="snackbar" top :timeout="4000">
 			<span>Aluno incluído com sucesso!</span>
-			<v-btn text color="white" @click="snackbar = false">Close</v-btn>
+			<v-btn text color="white" @click="snackbar = false">
+				<v-icon center left small>mdi-close</v-icon>
+			</v-btn>
 		</v-snackbar>
 		<!-- search -->
 		<v-layout row wrap justify-end class="mx-0 my-0">
