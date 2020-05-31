@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Lista de alunos</title>
+	<link href="styles.css">
+	<link rel="icon" href="#">
+</head>
+<body>
+	<div class="main">
+		<h1 class="title">Lista de alunos</h1>
+		<span id="list"></span>
+		<button id="btnCreate">Add</button>
+	</div>
+	<script>
+
+	const btnCreate = document.getElementById('btnCreate');
+	btnCreate.addEventListener('click', async e => {
+		const jsonRequest = {};
+		jsonRequest.user_name = prompt('enter the name');
+		console.log(jsonRequest)
+		const result = await fetch("http://localhost:3000/users", {method: "POST", 
+			mode: "no-cors",
+			headers: {"content-type":"application/json"},
+			body: JSON.stringify(jsonRequest)
+		})
+		const success = await result.json();
+		readUsers();
+
+	})
+
+	readUsers();
+	async function readUsers(){
+		try {
+			const list = document.getElementById('list')
+			// const list2 = document.getElementById('list2')
+			// const conteudo = document.getElementById('conteudo')
+			// const dados = {}
+
+			while(list.firstChild) list.removeChild(list.firstChild);
+			const rows = await fetch("http://localhost:3000/users", {method: "GET"})
+				.then((res) => res.json())
+				.then(t=> {
+					t.forEach(item => {
+						const ra = document.createElement('li');
+						const nome = document.createElement('p');
+						const email = document.createElement('p');
+						const cpf = document.createElement('p');
+						ra.textContent = item.user_ra
+						ra.id = item.user_ra
+						ra.style.fontWeight = 'bold';
+						nome.textContent = item.user_name;
+						nome.id = item.user_id;
+						// console.log(nome)
+						email.textContent = item.user_email;
+						cpf.textContent = item.user_cpf;
+						nome.addEventListener('click', async e => {
+							if (confirm(`Deseja excluir o aluno ${nome.textContent}?`)) {
+								const jsonRequest = {};
+								jsonRequest.user_id = e.target.id;
+								console.log(jsonRequest)
+								const result = await fetch("http://localhost:3000/users", {method: "DELETE", 
+									cors: "no-cors",
+									headers: {"content-type":"application/json"},
+									body: JSON.stringify(jsonRequest)
+								})
+								const success = await result.json();
+								readUsers();
+							}
+						})
+						list.appendChild(ra);
+						list.appendChild(nome);
+						list.appendChild(email);
+						list.appendChild(cpf);
+						// ra.appendChild(ra);
+						// conteudo.appendChild(nome);
+						// conteudo.appendChild(email);
+						// conteudo.appendChild(cpf);
+					})
+				})
+		}
+		catch(error) {
+			console.log('error')
+		}
+	}
+	</script>
+</body>
+</html>
