@@ -8,9 +8,11 @@
 	<link rel="icon" href="#">
 </head>
 <body>
-	<div class="main">
+	<div class="main" style="margin: 10px 50px; ">
 		<h1 class="title">Lista de alunos</h1>
-		<span id="list"></span>
+		<div>
+			<span id="list" style="font-size: 20px"></span>
+		</div>
 		<button id="btnCreate">Add</button>
 	</div>
 	<script>
@@ -50,11 +52,15 @@
 						ra.textContent = item.user_ra
 						ra.id = item.user_ra
 						ra.style.fontWeight = 'bold';
+						ra.style.marginTop = '10px';
 						nome.textContent = item.user_name;
+						nome.style.margin = 0;
 						nome.id = item.user_id;
 						// console.log(nome)
 						email.textContent = item.user_email;
+						email.style.margin = 0;
 						cpf.textContent = item.user_cpf;
+						cpf.style.margin = 0;
 						nome.addEventListener('click', async e => {
 							if (confirm(`Deseja excluir o aluno ${nome.textContent}?`)) {
 								const jsonRequest = {};
