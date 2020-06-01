@@ -20,7 +20,10 @@
 	const btnCreate = document.getElementById('btnCreate');
 	btnCreate.addEventListener('click', async e => {
 		const jsonRequest = {};
+		jsonRequest.user_ra = prompt('enter ra');
 		jsonRequest.user_name = prompt('enter the name');
+		jsonRequest.user_email = prompt('enter the name');
+		jsonRequest.user_cpf = prompt('enter the name');
 		console.log(jsonRequest)
 		const result = await fetch("http://localhost:3000/users", {method: "POST", 
 			mode: "no-cors",

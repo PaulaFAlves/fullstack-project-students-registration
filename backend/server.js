@@ -98,7 +98,7 @@ async function connect(){
 
 async function readTodos() {
 	try {
-		const results = await client.query('SELECT * FROM users');
+		const results = await client.query('SELECT * FROM users ORDER BY user_ra');
 		return results.rows;
 	}
 	catch (error) {
