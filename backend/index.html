@@ -36,9 +36,6 @@
 	async function readUsers(){
 		try {
 			const list = document.getElementById('list')
-			// const list2 = document.getElementById('list2')
-			// const conteudo = document.getElementById('conteudo')
-			// const dados = {}
 
 			while(list.firstChild) list.removeChild(list.firstChild);
 			const rows = await fetch("http://localhost:3000/users", {method: "GET"})

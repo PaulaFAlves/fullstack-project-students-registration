@@ -35,4 +35,4 @@ Neste ambiente, devem ser informados os dados básicos do aluno e, caso estejam 
 - O cadastro é validado somente se fornecidos todos os dados e de forma correta.
 - Dos campos do cadastro, somente o nome e o email podem ser editdos.
 - A funcionalidade de pesquisa está em desenvolvimento (não obrigatória no desafio inicial).
-- No Back End, foi utilizado o Firebase por motivos técnicos. Em futura atualização, banco de dados será migrado para Postgresql.
+- No Back End, foi utilizado o Firebase por motivos técnicos. Em futura atualização, banco de dados será migrado para Postgresql (_em andamento_).

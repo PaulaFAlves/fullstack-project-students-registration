@@ -32,7 +32,7 @@ app.post('/users', async (req, res) => {
 	try {
 
 		const reqJson = req.body;
-		await createTodo(reqJson.user_name);
+		await createTodo(reqJson);
 		result.success = true;
 	}
 	catch (error) {
@@ -43,6 +43,24 @@ app.post('/users', async (req, res) => {
 		res.send(JSON.stringify(result));	
 	}
 });
+
+app.put('/users', async (req, res) => {
+	let result = {}
+	try {
+
+		const reqJson = req.body;
+		await updateTodo(reqJson);
+		result.success = true;
+	}
+	catch (error) {
+		result.success = false;
+	}
+	finally {
+		res.setHeader("content-type", "application/json");
+		res.send(JSON.stringify(result));	
+	}
+});
+
 app.delete('/users', async (req, res) => {
 	let result = {}
 	try {
@@ -60,7 +78,7 @@ app.delete('/users', async (req, res) => {
 	}
 });
 
-app.listen(3000, () => console.log('server is listening on port 3030'));
+app.listen(3000, () => console.log('server is listening on port 3000'));
 
 start();
 
@@ -90,11 +108,21 @@ async function readTodos() {
 
 async function createTodo(todoText){
 	try {
-		await client.query('INSERT INTO users (user_name) VALUES ($1)', [todoText]);
+		await client.query('INSERT INTO users (user_ra, user_name, user_email, user_cpf) VALUES ($1, $2, $3, $4)', [todoText.user_ra, todoText.user_name, todoText.user_email, todoText.user_cpf]);
 		return true
 	}
 	catch (error) {
 		return false;
+	}
+};
+
+async function updateTodo(todoText) {
+	try {
+		await client.query('UPDATE users SET user_name = $2, user_email = $3 WHERE user_id = $1', [todoText.id, todoText.user_name, todoText.user_email]);
+		return true
+	}
+	catch (error) {
+		return false
 	}
 };
 
